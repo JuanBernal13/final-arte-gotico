@@ -48,6 +48,10 @@ button:disabled {
     #070605;
 }
 
+.start-screen h1 {
+  text-wrap: balance;
+}
+
 .ambient-particle {
   position: absolute;
   z-index: 3;
@@ -61,8 +65,23 @@ button:disabled {
 }
 
 .museum-card,
-.modal-panel {
+.modal-panel,
+.analysis-panel {
   transform-style: preserve-3d;
+}
+
+.key-card {
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.key-card:hover {
+  transform: translateX(4px);
+  border-color: rgba(216, 173, 96, 0.36);
+  background: rgba(216, 173, 96, 0.08);
 }
 
 .museum-card h1 {
@@ -91,11 +110,137 @@ button:disabled {
   box-shadow: 0 0 48px rgba(216, 173, 96, 0.96);
 }
 
+.hotspot-fe {
+  background: #7fb6c8;
+}
+
+.hotspot-simbolo {
+  background: #d8ad60;
+}
+
+.hotspot-poder {
+  background: #c96b77;
+}
+
+.hotspot-tecnica {
+  background: #f1cb74;
+}
+
+.guide-callout {
+  box-shadow: 0 0 80px rgba(216, 173, 96, 0.16);
+}
+
+.layer-preview,
+.timeline-item,
+.floor-node {
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.28);
+}
+
+.floorplan {
+  min-height: 620px;
+}
+
+.floorplan::before {
+  content: "";
+  position: absolute;
+  inset: 34px;
+  border: 1px solid rgba(216, 173, 96, 0.16);
+  pointer-events: none;
+}
+
+.floorplan::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  height: 70%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(216, 173, 96, 0.35), transparent);
+  pointer-events: none;
+}
+
+.floor-spine {
+  position: absolute;
+  left: 50%;
+  top: 86px;
+  bottom: 86px;
+  width: 90px;
+  transform: translateX(-50%);
+  border-inline: 1px solid rgba(216, 173, 96, 0.22);
+  background: rgba(216, 173, 96, 0.035);
+  pointer-events: none;
+}
+
+.floor-cross {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 88px;
+  transform: translateY(-50%);
+  border-block: 1px solid rgba(216, 173, 96, 0.2);
+  background: rgba(216, 173, 96, 0.026);
+  pointer-events: none;
+}
+
+.floor-label {
+  position: absolute;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  border: 1px solid rgba(216, 173, 96, 0.46);
+  background: rgba(7, 6, 5, 0.86);
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  color: #eac577;
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.top-label {
+  top: 28px;
+}
+
+.bottom-label {
+  bottom: 28px;
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(214, 211, 209, 0.76);
+}
+
+.floor-node {
+  backdrop-filter: blur(12px);
+  z-index: 3;
+  min-height: 104px;
+}
+
+.floor-node:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+}
+
+.analysis-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(216, 173, 96, 0.62) rgba(255, 255, 255, 0.08);
+}
+
+.analysis-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.analysis-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.analysis-scroll::-webkit-scrollbar-thumb {
+  background: rgba(216, 173, 96, 0.62);
 }
 
 @keyframes pulse-ring {
@@ -123,5 +268,33 @@ button:disabled {
 @media (max-width: 760px) {
   .museum-card h1 {
     font-size: clamp(2.8rem, 15vw, 4.9rem);
+  }
+
+  .floorplan {
+    min-height: auto;
+    overflow-y: auto;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .floor-node {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    transform: none;
+  }
+
+  .floor-label,
+  .floor-spine,
+  .floor-cross,
+  .floorplan::before,
+  .floorplan::after {
+    display: none;
+  }
+
+  .floor-node:hover {
+    transform: none;
   }
 }
