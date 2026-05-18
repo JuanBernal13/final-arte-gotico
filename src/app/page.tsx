@@ -37,8 +37,27 @@ const rooms = [
     analysis:
       "El retablo dirige la mirada hacia la salvacion cristiana, pero tambien hacia la memoria regia. Su grandeza no esta solo en la ornamentacion, sino en convertir el espacio religioso en una imagen de autoridad, contemplacion y legitimidad.",
     focus: "Tesis del recorrido: el retablo une arte, fe y poder regio en una imagen monumental.",
+    route: "Punto de partida. Presenta la obra y fija la pregunta principal del recorrido.",
     tag: "1496-1499",
     image: "/images/retablo-hero.png",
+  },
+  {
+    id: "tiempo",
+    icon: Clock3,
+    label: "Tiempo",
+    title: "Linea de tiempo del proyecto",
+    subtitle: "Memoria, encargo, ejecucion y restauracion",
+    body:
+      "Antes de entrar en los detalles del retablo conviene ubicarlo en su proceso historico. La obra nace de una politica de memoria, se ejecuta a finales del siglo XV y sigue siendo estudiada y conservada en la actualidad.",
+    idea: "El retablo es una obra medieval con una historia activa hasta hoy.",
+    keys: ["1492 memoria real", "1496-1499 ejecucion", "2007 restauracion"],
+    analysis:
+      "La cronologia muestra que el retablo no aparece como pieza aislada. Forma parte de un proyecto de memoria impulsado por Isabel I y de una vida material que continua con estudios, restauraciones y nuevas lecturas historicas.",
+    focus: "Primero ubicamos la obra en el tiempo para entender por que fue necesaria.",
+    route: "De la presentacion general pasamos al marco cronologico. Luego entraremos al monasterio donde la obra cobra sentido.",
+    tag: "Cronologia",
+    image: "/images/gothic-gallery-entrance.png",
+    special: "timeline",
   },
   {
     id: "monasterio",
@@ -53,6 +72,7 @@ const rooms = [
     analysis:
       "La Cartuja no es solo un recinto de oracion. Al alojar la memoria de Juan II e Isabel de Portugal, convierte la espiritualidad cartuja en escenario politico: rezar, recordar y legitimar ocurren en el mismo espacio.",
     focus: "El monasterio es una sala de oracion y un escenario de memoria dinastica.",
+    route: "Despues de ubicar la fecha, entramos al espacio. La Cartuja explica por que la obra mezcla retiro espiritual y memoria politica.",
     tag: "Oracion + linaje",
     image: "/images/gothic-gallery-entrance.png",
   },
@@ -69,6 +89,7 @@ const rooms = [
     analysis:
       "La monarquia aparece integrada en el relato sagrado. No se impone sobre lo religioso: se presenta protegida por el orden cristiano. Asi, la devocion se vuelve imagen politica y la memoria familiar adquiere autoridad publica.",
     focus: "La piedad de Isabel tambien es una forma de representacion politica.",
+    route: "Ya conocemos el lugar. Ahora entendemos quien impulsa su sentido politico y familiar.",
     tag: "Poder regio",
     image: "/images/retablo-hero.png",
   },
@@ -85,6 +106,7 @@ const rooms = [
     analysis:
       "Gil de Siloe organiza talla, relieve, color y arquitectura como una sola maquina visual. La riqueza material guia la mirada hacia el misterio religioso. El esplendor no es adorno, es estrategia de contemplacion.",
     focus: "El exceso ornamental esta al servicio de la contemplacion.",
+    route: "Tras ver el encargo regio, observamos el lenguaje artistico que hace visible ese programa.",
     tag: "Virtuosismo tecnico",
     image: "/images/retablo-symbols.png",
   },
@@ -101,6 +123,7 @@ const rooms = [
     analysis:
       "La imagen no solo recuerda la muerte de Cristo: la vincula con la liturgia del altar. Por eso, mirar la cruz equivale a entrar en el sentido de la Eucaristia: sacrificio, salvacion y presencia sagrada.",
     focus: "La cruz no es solo tema: es centro teologico, liturgico y emocional.",
+    route: "Del estilo pasamos al nucleo del mensaje. Todo el retablo se ordena alrededor de la Redencion.",
     tag: "Sacrificio y salvacion",
     image: "/images/retablo-symbols.png",
   },
@@ -117,6 +140,7 @@ const rooms = [
     analysis:
       "La rueda angelical sustituye una lectura lineal por una lectura concentrica. Todo gira alrededor de Cristo, y los angeles transforman la Crucifixion en acontecimiento universal, contemplado por cielo y tierra.",
     focus: "La composicion circular convierte la mirada en acto de contemplacion.",
+    route: "Una vez identificado el centro, analizamos la forma que lo rodea y lo separa como espacio sagrado.",
     tag: "Dimension celestial",
     image: "/images/retablo-symbols.png",
   },
@@ -133,42 +157,9 @@ const rooms = [
     analysis:
       "La iconografia educa la mirada. La Virgen y San Juan modelan el dolor devoto. Padre y Espiritu Santo elevan la escena a misterio trinitario. El pelicano resume la entrega de Cristo en clave eucaristica.",
     focus: "Cada simbolo guia una lectura doctrinal y afectiva.",
+    route: "Despues de la estructura circular, descendemos al detalle simbolico que permite leer el mensaje cristiano.",
     tag: "Libro visual",
     image: "/images/retablo-symbols.png",
-  },
-  {
-    id: "capas",
-    icon: Layers3,
-    label: "Capas",
-    title: "Antes y despues de interpretar",
-    subtitle: "De la impresion visual a la lectura historica",
-    body:
-      "Primero vemos una obra deslumbrante. Despues, al activar sus capas, aparecen los sistemas que la organizan: Redencion, Eucaristia, monarquia, rueda angelical y tecnica hispanoflamenca.",
-    idea: "Interpretar es aprender a ver relaciones, no solo detalles.",
-    keys: ["Primera mirada", "Capas simbolicas", "Lectura critica"],
-    analysis:
-      "El retablo impacta por brillo y complejidad, pero su inteligencia esta en la red de significados: lo visual conduce a lo teologico, lo teologico sostiene lo politico y la tecnica hace visible esa union.",
-    focus: "La obra cambia cuando se mira por capas.",
-    tag: "Comparacion visual",
-    image: "/images/retablo-symbols.png",
-    special: "layers",
-  },
-  {
-    id: "tiempo",
-    icon: Clock3,
-    label: "Tiempo",
-    title: "Linea de tiempo del proyecto",
-    subtitle: "Memoria, encargo, ejecucion y restauracion",
-    body:
-      "La obra pertenece a un proceso mas amplio: traslado de memorias reales, encargo artistico, ejecucion del retablo y restauracion contemporanea del conjunto.",
-    idea: "El retablo es un objeto medieval con una historia activa hasta hoy.",
-    keys: ["1492 memoria real", "1496-1499 ejecucion", "2007 restauracion"],
-    analysis:
-      "La cronologia muestra que el retablo no nace como pieza aislada. Forma parte de una politica de memoria impulsada por Isabel I y de una vida material que continua con los estudios y restauraciones modernas.",
-    focus: "La historia del retablo tambien es la historia de su conservacion.",
-    tag: "Cronologia",
-    image: "/images/gothic-gallery-entrance.png",
-    special: "timeline",
   },
   {
     id: "pasion",
@@ -183,6 +174,7 @@ const rooms = [
     analysis:
       "El espectador no observa una escena aislada, sino una secuencia. El relato de la Pasion conduce emocionalmente hasta la Crucifixion y convierte el retablo en una narracion visual de la Redencion.",
     focus: "Las escenas secundarias conducen al significado central: Cristo redime.",
+    route: "Con los simbolos claros, seguimos el relato de la Pasion que conduce de la escena al misterio.",
     tag: "Narracion devocional",
     image: "/images/retablo-symbols.png",
   },
@@ -199,8 +191,27 @@ const rooms = [
     analysis:
       "El brillo del dorado atrae. La talla retiene. Los simbolos enseñan. La experiencia va de la impresion sensible a la comprension espiritual, como una visita guiada medieval construida con luz, color y relieve.",
     focus: "La obra no solo se contempla: organiza una experiencia espiritual.",
+    route: "Despues del programa visual, pensamos en quien mira la obra y en como aprende a traves de ella.",
     tag: "Devocion visual",
     image: "/images/retablo-hero.png",
+  },
+  {
+    id: "capas",
+    icon: Layers3,
+    label: "Capas",
+    title: "Antes y despues de interpretar",
+    subtitle: "De la impresion visual a la lectura historica",
+    body:
+      "Al final del recorrido volvemos a mirar el retablo completo. La primera impresion es deslumbrante, pero ahora aparecen las capas que lo organizan: Redencion, Eucaristia, monarquia, rueda angelical y tecnica hispanoflamenca.",
+    idea: "Interpretar es aprender a ver relaciones, no solo detalles.",
+    keys: ["Primera mirada", "Capas simbolicas", "Lectura critica"],
+    analysis:
+      "El retablo impacta por brillo y complejidad, pero su inteligencia esta en la red de significados. Lo visual conduce a lo teologico, lo teologico sostiene lo politico y la tecnica hace visible esa union.",
+    focus: "La obra cambia cuando se mira por capas.",
+    route: "Esta sala recoge lo visto y lo ordena en tres grandes lecturas: arte, fe y poder.",
+    tag: "Comparacion visual",
+    image: "/images/retablo-symbols.png",
+    special: "layers",
   },
   {
     id: "cierre",
@@ -215,6 +226,7 @@ const rooms = [
     analysis:
       "La fuerza del retablo esta en su coherencia. Cruz, angeles, pelicano, santos, escudos y reyes orantes articulan una sola lectura: la salvacion cristiana se une a la espiritualidad cartuja y a la legitimacion de la monarquia castellana.",
     focus: "Interpretacion final: una obra compleja donde nada es puramente decorativo.",
+    route: "Cierre del recorrido. Todas las salas convergen en una misma conclusion interpretativa.",
     tag: "Sintesis final",
     image: "/images/retablo-hero.png",
   },
@@ -252,18 +264,18 @@ const hotspots = [
 ];
 
 const guideLines = [
-  "Comienza mirando el retablo como una arquitectura de significado: todo apunta al centro.",
-  "Aqui el silencio cartujo se cruza con la memoria de una dinastia.",
-  "Observa como la piedad de Isabel tambien construye legitimidad politica.",
-  "No leas el dorado como lujo: es una tecnologia visual para intensificar la fe.",
-  "La cruz concentra el programa: imagen, altar y Eucaristia trabajan juntos.",
-  "El circulo angelical convierte la escena en un acontecimiento cosmico.",
-  "Cada simbolo funciona como una llave para entender el misterio representado.",
-  "Activa las capas: veras como cambia la obra cuando sabes que buscar.",
-  "Ubica la obra en el tiempo: encargo, ejecucion y conservacion.",
-  "Sigue el relato de la Pasion como camino hacia la Redencion.",
-  "Piensa en el espectador medieval: aprender, conmoverse y meditar eran una misma experiencia.",
-  "Cierra el recorrido uniendo las tres dimensiones: arte, fe y poder regio.",
+  "Comienza con la idea principal. Esta obra une belleza, devocion y poder politico en un mismo programa visual.",
+  "Ubica la obra en el tiempo. Antes de leer sus simbolos, conviene entender el proceso historico que la hizo posible.",
+  "Entra al monasterio. La Cartuja explica por que la oracion y la memoria dinastica aparecen unidas.",
+  "Observa el patrocinio regio. Isabel I convierte la devocion familiar en una imagen publica de legitimidad.",
+  "Mira la tecnica. El dorado, la talla y la policromia no decoran solamente, tambien guian la contemplacion.",
+  "Ve al centro. La Crucifixion organiza el sentido religioso y liturgico de todo el retablo.",
+  "Lee la forma circular. La rueda angelical convierte la escena central en un acontecimiento celestial.",
+  "Acercate a los simbolos. Cada figura ayuda a comprender el misterio de la Redencion.",
+  "Sigue la narracion. Las escenas de la Pasion preparan emocionalmente la lectura de la cruz.",
+  "Piensa en el espectador. El retablo enseña, conmueve y acompaña la meditacion.",
+  "Activa las capas. Ahora puedes comparar la primera mirada con la lectura historica completa.",
+  "Cierra el recorrido. Arte, fe y poder regio se unen en una sola imagen monumental.",
 ];
 
 const interpretationLayers = [
@@ -521,6 +533,11 @@ export default function Home() {
               <p className="text-xs uppercase tracking-[0.28em] text-[#d8ad60]">Lectura de sala</p>
               <h2 className="mt-3 font-serif text-3xl leading-tight text-stone-50 sm:text-4xl">{room.focus}</h2>
 
+              <div className="route-card mt-5 border border-white/10 bg-white/[0.045] p-4">
+                <p className="text-[10px] uppercase tracking-[0.26em] text-stone-500">Trazabilidad del recorrido</p>
+                <p className="mt-2 text-sm leading-7 text-stone-300">{room.route}</p>
+              </div>
+
               <div className="mt-5 border-l-2 border-[#d8ad60] bg-[#d8ad60]/10 p-4">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#f0d39a]">Idea fuerza</p>
                 <p className="mt-2 text-lg leading-7 text-stone-100">{room.idea}</p>
@@ -594,6 +611,13 @@ export default function Home() {
           <div className="flex flex-col gap-4 border border-white/12 bg-black/38 p-3 backdrop-blur-md lg:flex-row lg:items-center">
             <div className="h-1.5 flex-1 bg-white/10">
               <div className="h-full bg-[#d8ad60] transition-all duration-500" style={{ width: `${progress}%` }} />
+            </div>
+            <div className="route-progress hidden min-w-[260px] border-x border-white/10 px-4 lg:block">
+              <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500">Ruta</p>
+              <p className="mt-1 text-sm text-stone-200">
+                {room.label}
+                {current < rooms.length - 1 ? ` hacia ${rooms[current + 1].label}` : " completada"}
+              </p>
             </div>
             <div className="flex items-center justify-between gap-3 lg:justify-end">
               <button
