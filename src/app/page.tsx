@@ -1,137 +1,140 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import {
+  ArrowLeft,
+  ArrowRight,
   BookOpen,
+  Church,
   Crown,
   Cross,
   Eye,
+  Home as HomeIcon,
   Landmark,
+  Map,
   Palette,
   Sparkles,
-  Triangle,
+  X,
 } from "lucide-react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const tourStops = [
+const rooms = [
   {
-    id: "contexto",
-    icon: Landmark,
-    eyebrow: "Estacion I",
-    title: "Contexto historico y funcion del monasterio",
-    summary:
-      "La Cartuja de Miraflores fue un espacio de vida contemplativa y, al mismo tiempo, un lugar de memoria real.",
-    details:
-      "En ella se encuentran los sepulcros de Juan II de Castilla e Isabel de Portugal, padres de Isabel I. Por eso, el monasterio une espiritualidad cartuja, silencio, oracion y representacion politica de la monarquia castellana.",
-    highlight: "Oracion + memoria dinastica",
+    id: "vestibulo",
+    icon: HomeIcon,
+    label: "Vestibulo",
+    title: "Retablo Mayor de la Cartuja de Miraflores",
+    subtitle: "Arte, fe y poder regio en el gotico hispanoflamenco",
+    body:
+      "Entramos a Burgos, al fondo del presbiterio de la Cartuja. El retablo, realizado entre 1496 y 1499 por Gil de Siloe con policromia y dorado de Diego de la Cruz, funciona como centro visual, espiritual y simbolico del espacio.",
+    tag: "1496-1499",
+    image: "/images/retablo-hero.png",
   },
   {
-    id: "mecenazgo",
+    id: "monasterio",
+    icon: Landmark,
+    label: "Monasterio",
+    title: "Un lugar de oracion y memoria real",
+    subtitle: "La Cartuja como escenario espiritual y politico",
+    body:
+      "La Cartuja de Miraflores fue concebida para la vida contemplativa, pero tambien como memoria dinastica. Alli se encuentran los sepulcros de Juan II de Castilla e Isabel de Portugal, padres de Isabel I.",
+    tag: "Oracion + linaje",
+    image: "/images/gothic-gallery-entrance.png",
+  },
+  {
+    id: "isabel",
     icon: Crown,
-    eyebrow: "Estacion II",
-    title: "El mecenazgo de Isabel I de Castilla",
-    summary:
-      "Isabel la Catolica convierte el monasterio en un escenario de poder regio, piedad y legitimidad.",
-    details:
-      "Su intervencion no fue solo economica: fue politica y espiritual. Escudos, figuras orantes y simbolos de Castilla y Portugal integran a la monarquia dentro del relato sagrado.",
-    highlight: "Arte como autoridad",
+    label: "Mecenazgo",
+    title: "Isabel I convierte el arte en poder",
+    subtitle: "Mecenazgo, legitimidad y piedad regia",
+    body:
+      "La intervencion de Isabel la Catolica no fue solo economica. Fue una decision politica y espiritual: escudos, figuras orantes y simbolos de Castilla y Portugal integran la monarquia dentro del relato cristiano.",
+    tag: "Poder regio",
+    image: "/images/retablo-hero.png",
   },
   {
     id: "estilo",
     icon: Palette,
-    eyebrow: "Estacion III",
+    label: "Estilo",
     title: "Gotico hispanoflamenco",
-    summary:
-      "El retablo pertenece al gotico hispanoflamenco: riqueza decorativa, talla minuciosa, dorado y policromia intensa.",
-    details:
-      "Gil de Siloe integra arquitectura, escultura y decoracion en una composicion global. La obra no ordena la mirada de forma simple; la conduce por una experiencia visual compleja y devocional.",
-    highlight: "Virtuosismo y esplendor",
+    subtitle: "Riqueza ornamental, talla fina y policromia",
+    body:
+      "El retablo concentra el gusto hispanoflamenco: detalle escultorico, dorado, color intenso, expresividad y una composicion que no se limita a calles y cuerpos tradicionales.",
+    tag: "Virtuosismo tecnico",
+    image: "/images/retablo-symbols.png",
   },
   {
-    id: "redencion",
+    id: "centro",
     icon: Cross,
-    eyebrow: "Estacion IV",
-    title: "Redencion y Eucaristia",
-    summary:
-      "El centro teologico del retablo es la salvacion mediante el sacrificio de Cristo, vinculada a la Eucaristia.",
-    details:
-      "Cristo crucificado ocupa el eje de la composicion. La tension del cuerpo, las heridas y la expresividad buscan conmover y orientar la oracion.",
-    highlight: "La cruz como centro visual",
+    label: "Centro",
+    title: "La Redencion y la Eucaristia",
+    subtitle: "La cruz como nucleo del recorrido",
+    body:
+      "Cristo crucificado ocupa el centro. La obra presenta la salvacion mediante el sacrificio de Cristo y la relaciona directamente con la Eucaristia, sacramento que actualiza ese sacrificio.",
+    tag: "Sacrificio y salvacion",
+    image: "/images/retablo-symbols.png",
   },
   {
     id: "rueda",
     icon: Sparkles,
-    eyebrow: "Estacion V",
+    label: "Rueda",
     title: "La rueda angelical",
-    summary:
-      "Una gran estructura circular rodea a Cristo y concentra la mirada del espectador.",
-    details:
-      "Los angeles no son decoracion secundaria: indican que el sacrificio de la cruz posee una dimension celestial y universal.",
-    highlight: "El cielo rodea el sacrificio",
+    subtitle: "Un cielo circular alrededor de Cristo",
+    body:
+      "La gran estructura circular ordena la composicion y concentra la mirada. Los angeles indican que la Crucifixion no pertenece solo al mundo humano: involucra a toda la creacion espiritual.",
+    tag: "Dimension celestial",
+    image: "/images/retablo-symbols.png",
   },
   {
-    id: "iconografia",
-    icon: Triangle,
-    eyebrow: "Estacion VI",
-    title: "Simbolos iconograficos",
-    summary:
-      "Cristo, la Virgen, San Juan, Dios Padre, el Espiritu Santo y el pelicano eucaristico componen una lectura trinitaria y sacrificial.",
-    details:
-      "El pelicano medieval, que alimenta a sus crias con su propia sangre, refuerza la relacion entre Crucifixion, sacrificio y Eucaristia.",
-    highlight: "Simbolo, fe y doctrina",
-  },
-  {
-    id: "experiencia",
+    id: "simbolos",
     icon: Eye,
-    eyebrow: "Estacion VII",
-    title: "Funcion religiosa y experiencia",
-    summary:
-      "El retablo ensena, conmueve y favorece la devocion como un libro visual para monjes y fieles.",
-    details:
-      "La belleza material no es mero adorno: funciona como camino hacia la meditacion religiosa dentro de una vida marcada por silencio y contemplacion.",
-    highlight: "La imagen como meditacion",
+    label: "Simbolos",
+    title: "Iconografia: ver para comprender",
+    subtitle: "Virgen, San Juan, Trinidad y pelicano eucaristico",
+    body:
+      "A los pies de la cruz aparecen la Virgen y San Juan. A ambos lados, Dios Padre y el Espiritu Santo completan la lectura trinitaria. El pelicano eucaristico refuerza el sacrificio de Cristo.",
+    tag: "Libro visual",
+    image: "/images/retablo-symbols.png",
   },
   {
-    id: "interpretacion",
+    id: "cierre",
     icon: BookOpen,
-    eyebrow: "Estacion VIII",
-    title: "Interpretacion critica",
-    summary:
-      "La grandeza de la obra surge de la union entre arte, fe y poder regio.",
-    details:
-      "Cruz, angeles, pelicano, santos, reyes orantes, escudos y dorado forman un discurso coherente: la salvacion cristiana aparece unida a la memoria monarquica.",
-    highlight: "Arte, fe y poder",
+    label: "Lectura",
+    title: "Arte, fe y poder en una sola imagen",
+    subtitle: "Interpretacion critica",
+    body:
+      "La obra une tres dimensiones: virtuosismo artistico, misterio religioso y memoria monarquica. Cruz, angeles, pelicano, santos, reyes orantes, escudos y dorado forman un discurso visual coherente.",
+    tag: "Sintesis final",
+    image: "/images/retablo-hero.png",
   },
 ];
 
-const quickFacts = [
-  ["Ubicacion", "Cartuja de Miraflores, Burgos"],
-  ["Cronologia", "1496-1499"],
-  ["Talla", "Gil de Siloe"],
-  ["Policromia", "Diego de la Cruz"],
-  ["Estilo", "Gotico hispanoflamenco"],
-  ["Tema", "Redencion cristiana y Eucaristia"],
-];
-
-const keywords = [
-  "Redencion cristiana",
-  "Eucaristia",
-  "Gotico hispanoflamenco",
-  "Gil de Siloe",
-  "Diego de la Cruz",
-  "Isabel la Catolica",
-  "Mecenazgo",
-  "Poder regio",
-  "Memoria dinastica",
-  "Rueda angelical",
-  "Pelicano eucaristico",
-  "Policromia",
-  "Dorado",
-  "Devocion",
+const hotspots = [
+  {
+    x: "50%",
+    y: "36%",
+    title: "Crucifixion",
+    text: "Centro visual y teologico del retablo: la Redencion cristiana se concentra en el sacrificio de Cristo.",
+  },
+  {
+    x: "50%",
+    y: "18%",
+    title: "Pelicano eucaristico",
+    text: "Simbolo medieval de Cristo que entrega su sangre por los creyentes, vinculando Cruz y Eucaristia.",
+  },
+  {
+    x: "29%",
+    y: "48%",
+    title: "Reyes orantes",
+    text: "La memoria dinastica aparece integrada al discurso sagrado y legitima el poder regio castellano.",
+  },
+  {
+    x: "70%",
+    y: "48%",
+    title: "Rueda angelical",
+    text: "El circulo de angeles separa y exalta el espacio sagrado alrededor de Cristo.",
+  },
 ];
 
 const sources = [
@@ -144,16 +147,20 @@ const sources = [
 ];
 
 export default function Home() {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+  const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
+  const [mapOpen, setMapOpen] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const room = rooms[current];
+  const progress = ((current + 1) / rooms.length) * 100;
 
   const particles = useMemo(
     () =>
-      Array.from({ length: 38 }, (_, index) => ({
+      Array.from({ length: 32 }, (_, index) => ({
         id: index,
-        left: `${(index * 23) % 100}%`,
-        top: `${(index * 41) % 96}%`,
-        delay: `${(index % 10) * 0.55}s`,
-        size: `${(index % 3) + 1}px`,
+        left: `${(index * 31) % 100}%`,
+        top: `${(index * 43) % 95}%`,
+        delay: `${(index % 8) * 0.5}s`,
       })),
     [],
   );
@@ -162,225 +169,204 @@ export default function Home() {
     const ctx = gsap.context(() => {
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from(".hero-art", { scale: 1.16, filter: "blur(12px)", duration: 2.1 })
-        .from(".hero-mark", { scale: 0.35, rotate: -30, opacity: 0, duration: 1 }, 0.2)
-        .from(".hero-copy > *", { y: 48, opacity: 0, stagger: 0.12, duration: 0.95 }, 0.42)
-        .from(".fact-card", { y: 28, opacity: 0, stagger: 0.08, duration: 0.8 }, 0.85);
-
-      gsap.to(".hero-art", {
-        yPercent: 11,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.utils.toArray<HTMLElement>(".tour-stop").forEach((section, index) => {
-        gsap.from(section.querySelectorAll(".stop-reveal"), {
-          opacity: 0,
-          y: 62,
-          stagger: 0.12,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 72%",
-          },
-        });
-
-        gsap.to(section.querySelector(".halo-ring"), {
-          rotate: index % 2 === 0 ? 24 : -24,
-          scale: 1.08,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      });
-
-      gsap.from(".keyword", {
-        opacity: 0,
-        y: 20,
-        stagger: 0.035,
-        duration: 0.55,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".keywords",
-          start: "top 78%",
-        },
-      });
-    }, rootRef);
+        .fromTo(".room-image", { scale: 1.12, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.05 })
+        .fromTo(".museum-card > *", { y: 34, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.72 }, 0.12)
+        .fromTo(".hotspot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.08, duration: 0.55 }, 0.48)
+        .fromTo(".nav-pill", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.03, duration: 0.45 }, 0.3);
+    }, stageRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [current]);
+
+  const goTo = (index: number) => {
+    setCurrent(Math.max(0, Math.min(index, rooms.length - 1)));
+    setActiveHotspot(null);
+    setMapOpen(false);
+  };
+
+  const Icon = room.icon;
 
   return (
-    <main ref={rootRef} className="min-h-screen overflow-hidden bg-[#080706] text-[#f6ead7]">
-      <section className="hero relative min-h-screen px-5 py-5 sm:px-8 lg:px-12">
+    <main className="museum-shell min-h-screen overflow-hidden bg-[#070605] text-[#f8ecd8]">
+      <div ref={stageRef} className="relative min-h-screen">
         <Image
-          className="hero-art absolute inset-0 h-full w-full object-cover"
-          src="/images/retablo-hero.png"
-          alt="Recreacion visual de un retablo gotico hispanoflamenco en una iglesia cartuja"
+          key={room.image + current}
+          className="room-image absolute inset-0 h-full w-full object-cover"
+          src={room.image}
+          alt={room.title}
           fill
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,4,3,0.92),rgba(5,4,3,0.52)_45%,rgba(5,4,3,0.82)),radial-gradient(circle_at_72%_35%,rgba(207,151,67,0.14),transparent_34%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#080706] to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,4,3,0.93),rgba(5,4,3,0.54)_48%,rgba(5,4,3,0.9)),radial-gradient(circle_at_68%_36%,rgba(211,158,75,0.18),transparent_34%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#070605] to-transparent" />
 
         {particles.map((particle) => (
           <span
             key={particle.id}
-            className="tour-particle"
-            style={{
-              left: particle.left,
-              top: particle.top,
-              width: particle.size,
-              height: particle.size,
-              animationDelay: particle.delay,
-            }}
+            className="ambient-particle"
+            style={{ left: particle.left, top: particle.top, animationDelay: particle.delay }}
           />
         ))}
 
-        <nav className="relative z-10 flex items-center justify-between border-b border-[#f4d99b]/14 pb-4">
-          <a href="#inicio" className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center border border-[#d6a64f]/60 bg-black/35 text-[#e8c178]">
-              <Cross size={17} />
+        <header className="relative z-20 flex items-center justify-between px-5 py-4 sm:px-8">
+          <button
+            onClick={() => goTo(0)}
+            className="flex items-center gap-3 border border-[#d8ad60]/30 bg-black/36 px-4 py-3 text-left backdrop-blur-md"
+          >
+            <Church size={18} className="text-[#eac577]" />
+            <span>
+              <span className="block font-serif text-lg leading-none">Museo Miraflores</span>
+              <span className="block text-[10px] uppercase tracking-[0.22em] text-stone-400">Tour interactivo</span>
             </span>
-            <span className="font-serif text-xl tracking-[0.18em]">MIRAFLORES</span>
-          </a>
-          <div className="hidden gap-6 text-xs uppercase tracking-[0.22em] text-stone-300 md:flex">
-            <a href="#tour">Tour</a>
-            <a href="#palabras">Claves</a>
-            <a href="#fuentes">Fuentes</a>
-          </div>
-        </nav>
+          </button>
 
-        <div id="inicio" className="relative z-10 grid min-h-[calc(100vh-84px)] items-end gap-10 pb-8 pt-14 lg:grid-cols-[minmax(0,1fr)_430px]">
-          <div className="hero-copy max-w-5xl">
-            <div className="hero-mark mb-7 inline-grid h-20 w-20 place-items-center rounded-full border border-[#d6a64f]/45 bg-black/30 text-[#eac577] shadow-[0_0_60px_rgba(214,166,79,0.25)] backdrop-blur">
-              <Crown size={28} />
-            </div>
-            <p className="text-xs uppercase tracking-[0.38em] text-[#d6a64f]">Arte, fe y poder regio en el gotico hispanoflamenco</p>
-            <h1 className="mt-5 max-w-5xl font-serif text-[clamp(3.1rem,9vw,8.8rem)] leading-[0.84] text-stone-50">
-              Retablo Mayor de la Cartuja de Miraflores
-            </h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-stone-200/88">
-              Una visita guiada por una de las obras mas representativas del arte gotico hispano de finales del siglo XV:
-              centro visual, espiritual y simbolico de la iglesia cartuja de Burgos.
-            </p>
-            <a
-              href="#tour"
-              className="mt-8 inline-flex min-h-12 items-center gap-3 border border-[#d6a64f]/70 bg-[#d6a64f] px-5 text-sm font-semibold uppercase tracking-[0.16em] text-black transition hover:bg-[#f1cb74]"
-            >
-              Iniciar tour
-              <Sparkles size={17} />
-            </a>
-          </div>
+          <button
+            onClick={() => setMapOpen(true)}
+            className="inline-flex min-h-11 items-center gap-2 border border-white/14 bg-black/36 px-4 text-xs uppercase tracking-[0.18em] text-stone-100 backdrop-blur-md transition hover:border-[#d8ad60]/60"
+          >
+            <Map size={16} />
+            Mapa
+          </button>
+        </header>
 
-          <aside className="grid gap-3">
-            {quickFacts.map(([label, value]) => (
-              <div key={label} className="fact-card border border-white/12 bg-black/38 p-4 backdrop-blur-md">
-                <p className="text-[10px] uppercase tracking-[0.26em] text-[#d6a64f]">{label}</p>
-                <p className="mt-2 text-lg text-stone-100">{value}</p>
-              </div>
-            ))}
-          </aside>
-        </div>
-      </section>
-
-      <section id="tour" className="relative px-5 py-20 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-14 max-w-3xl">
-            <p className="text-xs uppercase tracking-[0.34em] text-[#d6a64f]">Recorrido por estaciones</p>
-            <h2 className="mt-4 font-serif text-5xl leading-none text-stone-50 sm:text-7xl">
-              Del monasterio al simbolo
-            </h2>
-          </div>
-
-          <div className="grid gap-10">
-            {tourStops.map((stop, index) => {
-              const Icon = stop.icon;
-              const isImageStop = index === 4 || index === 5;
-
-              return (
-                <article
-                  key={stop.id}
-                  id={stop.id}
-                  className="tour-stop relative grid min-h-[520px] overflow-hidden border border-white/12 bg-[#11100e] lg:grid-cols-[0.85fr_1.15fr]"
-                >
-                  <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden border-b border-white/12 bg-[#090807] p-8 lg:border-b-0 lg:border-r">
-                    {isImageStop ? (
-                      <Image
-                        className="absolute inset-0 h-full w-full object-cover opacity-80"
-                        src="/images/retablo-symbols.png"
-                        alt="Detalle simbolico de rueda angelical y dorado gotico"
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 42vw"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(199,143,62,0.22),transparent_34%),linear-gradient(135deg,rgba(48,27,30,0.7),rgba(7,7,7,0.95))]" />
-                    )}
-                    <div className="halo-ring relative grid aspect-square w-64 place-items-center rounded-full border border-[#d6a64f]/40 bg-black/26 shadow-[0_0_90px_rgba(214,166,79,0.18)] backdrop-blur-sm">
-                      <div className="absolute inset-8 rounded-full border border-[#d6a64f]/25" />
-                      <div className="absolute inset-16 rounded-full border border-[#d6a64f]/25" />
-                      <Icon className="relative text-[#f0c875]" size={58} strokeWidth={1.25} />
-                    </div>
-                  </div>
-
-                  <div className="relative p-6 sm:p-9 lg:p-12">
-                    <p className="stop-reveal text-xs uppercase tracking-[0.32em] text-[#d6a64f]">{stop.eyebrow}</p>
-                    <h3 className="stop-reveal mt-4 max-w-3xl font-serif text-4xl leading-tight text-stone-50 sm:text-6xl">
-                      {stop.title}
-                    </h3>
-                    <p className="stop-reveal mt-7 max-w-3xl text-xl leading-9 text-stone-200">{stop.summary}</p>
-                    <p className="stop-reveal mt-6 max-w-3xl text-base leading-8 text-stone-400">{stop.details}</p>
-                    <div className="stop-reveal mt-9 inline-flex border border-[#d6a64f]/45 bg-[#d6a64f]/10 px-4 py-3 text-xs uppercase tracking-[0.22em] text-[#eac577]">
-                      {stop.highlight}
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="palabras" className="keywords px-5 py-20 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-7xl border-y border-white/12 py-14">
-          <p className="text-xs uppercase tracking-[0.34em] text-[#d6a64f]">Palabras clave para la infografia</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {keywords.map((keyword) => (
-              <span key={keyword} className="keyword border border-white/12 bg-white/[0.04] px-4 py-3 text-sm text-stone-200">
-                {keyword}
+        <section className="relative z-10 grid min-h-[calc(100vh-92px)] items-end gap-8 px-5 pb-6 sm:px-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.55fr)]">
+          <div className="museum-card max-w-4xl">
+            <div className="inline-flex items-center gap-3 border border-[#d8ad60]/35 bg-black/34 px-4 py-3 backdrop-blur-md">
+              <Icon size={18} className="text-[#eac577]" />
+              <span className="text-xs uppercase tracking-[0.26em] text-[#eac577]">
+                Sala {current + 1} de {rooms.length}
               </span>
-            ))}
+            </div>
+            <h1 className="mt-5 font-serif text-[clamp(3rem,8vw,8rem)] leading-[0.86] text-stone-50">{room.title}</h1>
+            <p className="mt-5 max-w-2xl text-sm uppercase tracking-[0.24em] text-[#d8ad60]">{room.subtitle}</p>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-200">{room.body}</p>
+            <div className="mt-7 inline-flex border border-white/16 bg-white/[0.06] px-4 py-3 text-xs uppercase tracking-[0.22em] text-stone-200">
+              {room.tag}
+            </div>
           </div>
-        </div>
-      </section>
 
-      <section id="fuentes" className="px-5 pb-24 sm:px-8 lg:px-12">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[360px_1fr]">
-          <div>
-            <p className="text-xs uppercase tracking-[0.34em] text-[#d6a64f]">Fuentes recomendadas</p>
-            <h2 className="mt-4 font-serif text-5xl leading-none text-stone-50">Base documental</h2>
+          <aside className="relative min-h-[440px] overflow-hidden border border-white/12 bg-black/34 p-4 backdrop-blur-md">
+            <div className="relative h-full min-h-[410px] overflow-hidden border border-[#d8ad60]/22 bg-[#0d0b09]">
+              <Image
+                className="h-full w-full object-cover opacity-82"
+                src="/images/retablo-symbols.png"
+                alt="Mapa visual del retablo con puntos interactivos"
+                fill
+                sizes="420px"
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,transparent,rgba(0,0,0,0.42)_72%)]" />
+              {hotspots.map((spot, index) => (
+                <button
+                  key={spot.title}
+                  onClick={() => setActiveHotspot(index)}
+                  className="hotspot absolute grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#f5d28d] bg-[#d8ad60] text-black shadow-[0_0_34px_rgba(216,173,96,0.7)]"
+                  style={{ left: spot.x, top: spot.y }}
+                  aria-label={spot.title}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <div className="absolute bottom-3 left-3 right-3 border border-white/12 bg-black/58 p-3 text-xs leading-5 text-stone-300 backdrop-blur-md">
+                Toca los puntos para leer detalles del retablo como en una sala interactiva.
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <footer className="relative z-20 px-5 pb-5 sm:px-8">
+          <div className="flex flex-col gap-4 border border-white/12 bg-black/38 p-3 backdrop-blur-md lg:flex-row lg:items-center">
+            <div className="h-1.5 flex-1 bg-white/10">
+              <div className="h-full bg-[#d8ad60] transition-all duration-500" style={{ width: `${progress}%` }} />
+            </div>
+            <div className="flex items-center justify-between gap-3 lg:justify-end">
+              <button
+                onClick={() => goTo(current - 1)}
+                disabled={current === 0}
+                className="inline-flex min-h-11 items-center gap-2 border border-white/14 px-4 text-sm uppercase tracking-[0.16em] text-stone-100 transition hover:border-[#d8ad60]/60 disabled:cursor-not-allowed disabled:opacity-35"
+              >
+                <ArrowLeft size={16} />
+                Anterior
+              </button>
+              <div className="hidden gap-2 xl:flex">
+                {rooms.map((item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => goTo(index)}
+                    className={`nav-pill h-3 w-9 border transition ${
+                      current === index ? "border-[#d8ad60] bg-[#d8ad60]" : "border-white/18 bg-white/8 hover:border-[#d8ad60]/60"
+                    }`}
+                    aria-label={item.label}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => goTo(current + 1)}
+                disabled={current === rooms.length - 1}
+                className="inline-flex min-h-11 items-center gap-2 border border-[#d8ad60]/70 bg-[#d8ad60] px-4 text-sm font-semibold uppercase tracking-[0.16em] text-black transition hover:bg-[#efca79] disabled:cursor-not-allowed disabled:opacity-35"
+              >
+                Siguiente
+                <ArrowRight size={16} />
+              </button>
+            </div>
           </div>
-          <div className="grid gap-3">
-            {sources.map((source, index) => (
-              <p key={source} className="border border-white/10 bg-black/24 p-4 text-stone-300">
-                <span className="mr-4 text-[#d6a64f]">0{index + 1}</span>
-                {source}
-              </p>
-            ))}
+        </footer>
+      </div>
+
+      {activeHotspot !== null && (
+        <div className="fixed inset-0 z-40 grid place-items-center bg-black/68 p-5 backdrop-blur-sm">
+          <article className="modal-panel w-full max-w-lg border border-[#d8ad60]/35 bg-[#100d0a] p-6 text-stone-100 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <p className="text-xs uppercase tracking-[0.28em] text-[#d8ad60]">Punto interactivo</p>
+              <button onClick={() => setActiveHotspot(null)} className="grid h-9 w-9 place-items-center border border-white/14">
+                <X size={16} />
+              </button>
+            </div>
+            <h2 className="mt-4 font-serif text-4xl">{hotspots[activeHotspot].title}</h2>
+            <p className="mt-4 leading-8 text-stone-300">{hotspots[activeHotspot].text}</p>
+          </article>
+        </div>
+      )}
+
+      {mapOpen && (
+        <div className="fixed inset-0 z-50 bg-[#070605]/92 p-5 backdrop-blur-md">
+          <div className="mx-auto flex h-full max-w-6xl flex-col border border-white/12 bg-black/24 p-5">
+            <div className="flex items-center justify-between border-b border-white/12 pb-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-[#d8ad60]">Mapa del museo</p>
+                <h2 className="font-serif text-4xl text-stone-50">Elige una sala</h2>
+              </div>
+              <button onClick={() => setMapOpen(false)} className="grid h-11 w-11 place-items-center border border-white/14">
+                <X size={18} />
+              </button>
+            </div>
+            <div className="grid flex-1 content-center gap-4 py-6 sm:grid-cols-2 lg:grid-cols-4">
+              {rooms.map((item, index) => {
+                const ItemIcon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => goTo(index)}
+                    className={`group min-h-48 border p-5 text-left transition ${
+                      current === index
+                        ? "border-[#d8ad60] bg-[#d8ad60]/12"
+                        : "border-white/12 bg-white/[0.04] hover:border-[#d8ad60]/60"
+                    }`}
+                  >
+                    <ItemIcon className="text-[#d8ad60]" size={24} />
+                    <p className="mt-8 text-xs uppercase tracking-[0.22em] text-stone-500">Sala {index + 1}</p>
+                    <h3 className="mt-2 font-serif text-3xl text-stone-50">{item.label}</h3>
+                    <p className="mt-3 line-clamp-2 text-sm leading-6 text-stone-400">{item.subtitle}</p>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="border-t border-white/12 pt-4 text-xs leading-6 text-stone-500">
+              Fuentes: {sources.join(" | ")}
+            </div>
           </div>
         </div>
-      </section>
+      )}
     </main>
   );
 }
