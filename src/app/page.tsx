@@ -341,6 +341,12 @@ const sources = [
   "Fundacion Iberdrola. La Cartuja de Miraflores II: El retablo, 2007.",
 ];
 
+const teamMembers = [
+  ["Catalina Bedoya", "202222001"],
+  ["Cristian Parrado", "202317833"],
+  ["Juan Camilo Ruiz", "201123138"],
+];
+
 export default function Home() {
   const [started, setStarted] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -405,6 +411,14 @@ export default function Home() {
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-stone-200">
             Un recorrido guiado por arte, fe y poder regio en el gotico hispanoflamenco.
           </p>
+          <div className="mx-auto mt-7 grid max-w-3xl gap-3 sm:grid-cols-3">
+            {teamMembers.map(([name, code]) => (
+              <div key={code} className="border border-white/16 bg-black/36 px-4 py-3 backdrop-blur-md">
+                <p className="font-serif text-xl leading-6 text-stone-50">{name}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[#d8ad60]">{code}</p>
+              </div>
+            ))}
+          </div>
           <button
             onClick={() => {
               setStarted(true);
