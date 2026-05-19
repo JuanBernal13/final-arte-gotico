@@ -6,6 +6,8 @@ import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
+  Bookmark,
+  Check,
   Church,
   Clock3,
   Crown,
@@ -17,6 +19,7 @@ import {
   Layers3,
   Map,
   Palette,
+  PenLine,
   Play,
   Sparkles,
   X,
@@ -461,6 +464,14 @@ const teamMembers = [
   ["Juan Camilo Ruiz", "201123138"],
 ];
 
+type JournalEntry = {
+  important?: boolean;
+  note?: string;
+  seen?: boolean;
+};
+
+type Journal = Record<string, JournalEntry>;
+
 export default function Home() {
   const [started, setStarted] = useState(false);
   const [activeTour, setActiveTour] = useState<"main" | "gothic">("main");
@@ -470,12 +481,33 @@ export default function Home() {
   const [guided, setGuided] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(0);
+  const [journal, setJournal] = useState<Journal>(() => {
+    if (typeof window === "undefined") {
+      return {};
+    }
+
+    try {
+      return JSON.parse(window.localStorage.getItem("miraflores-tour-journal") ?? "{}") as Journal;
+    } catch {
+      return {};
+    }
+  });
   const stageRef = useRef<HTMLDivElement>(null);
   const tourRooms = activeTour === "gothic" ? gothicRooms : rooms;
   const activeGuideLines = activeTour === "gothic" ? gothicGuideLines : guideLines;
   const room = tourRooms[current];
   const roomSpecial = "special" in room ? room.special : undefined;
+  const journalKey = `${activeTour}:${room.id}`;
+  const currentJournal = journal[journalKey] ?? {};
+  const seenCount = tourRooms.filter((item) => journal[`${activeTour}:${item.id}`]?.seen).length;
+  const importantCount = tourRooms.filter((item) => journal[`${activeTour}:${item.id}`]?.important).length;
   const progress = ((current + 1) / tourRooms.length) * 100;
+  const layoutVariant = current % 4;
+  const isReversed = layoutVariant === 1 || layoutVariant === 3;
+  const isFeatureLayout = layoutVariant === 2;
+  const sectionLayoutClass = isFeatureLayout
+    ? "lg:grid-cols-[minmax(420px,0.68fr)_minmax(0,0.95fr)] lg:items-center"
+    : "lg:grid-cols-[minmax(0,0.82fr)_minmax(420px,0.72fr)] lg:items-end";
 
   const particles = useMemo(
     () =>
@@ -487,6 +519,10 @@ export default function Home() {
       })),
     [],
   );
+
+  useEffect(() => {
+    window.localStorage.setItem("miraflores-tour-journal", JSON.stringify(journal));
+  }, [journal]);
 
   useEffect(() => {
     if (!started || !stageRef.current) {
@@ -516,6 +552,16 @@ export default function Home() {
     setCurrent(0);
     setStarted(true);
     setGuided(true);
+  };
+
+  const updateJournal = (updates: JournalEntry) => {
+    setJournal((entries) => ({
+      ...entries,
+      [journalKey]: {
+        ...entries[journalKey],
+        ...updates,
+      },
+    }));
   };
 
   const Icon = room.icon;
@@ -633,8 +679,8 @@ export default function Home() {
           </div>
         </header>
 
-        <section className="relative z-10 grid min-h-[calc(100vh-92px)] items-end gap-8 px-5 pb-6 sm:px-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(420px,0.72fr)]">
-          <div className="museum-card max-w-4xl">
+        <section className={`room-layout room-layout-${layoutVariant} relative z-10 grid min-h-[calc(100vh-92px)] gap-8 px-5 pb-6 sm:px-8 ${sectionLayoutClass}`}>
+          <div className={`museum-card max-w-4xl ${isReversed ? "lg:order-2 lg:justify-self-end lg:text-right" : ""}`}>
             <div className="inline-flex items-center gap-3 border border-[#d8ad60]/35 bg-black/34 px-4 py-3 backdrop-blur-md">
               <Icon size={18} className="text-[#eac577]" />
               <span className="text-xs uppercase tracking-[0.26em] text-[#eac577]">
@@ -643,9 +689,9 @@ export default function Home() {
             </div>
             <h1 className="mt-5 font-serif text-[clamp(3rem,8vw,8rem)] leading-[0.86] text-stone-50">{room.title}</h1>
             <p className="mt-5 max-w-2xl text-sm uppercase tracking-[0.24em] text-[#d8ad60]">{room.subtitle}</p>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-200">{room.body}</p>
+            <p className={`mt-6 max-w-3xl text-lg leading-8 text-stone-200 ${isReversed ? "lg:ml-auto" : ""}`}>{room.body}</p>
             {guided && (
-              <div className="guide-callout mt-6 max-w-3xl border border-[#d8ad60]/45 bg-black/48 p-4 backdrop-blur-md">
+              <div className={`guide-callout mt-6 max-w-3xl border border-[#d8ad60]/45 bg-black/48 p-4 backdrop-blur-md ${isReversed ? "lg:ml-auto" : ""}`}>
                 <p className="text-[10px] uppercase tracking-[0.28em] text-[#d8ad60]">Guia de sala</p>
                 <p className="mt-2 font-serif text-2xl leading-8 text-stone-50">{activeGuideLines[current]}</p>
               </div>
@@ -655,11 +701,11 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="analysis-panel relative max-h-[74vh] overflow-hidden border border-white/12 bg-black/42 backdrop-blur-md">
-            <div className="relative h-52 overflow-hidden border-b border-white/12 bg-[#0d0b09] sm:h-60">
+          <aside className={`analysis-panel relative max-h-[74vh] overflow-hidden border border-white/12 bg-black/42 backdrop-blur-md ${isReversed ? "lg:order-1" : ""} ${isFeatureLayout ? "feature-analysis" : ""}`}>
+            <div className={`relative overflow-hidden border-b border-white/12 bg-[#0d0b09] ${isFeatureLayout ? "h-72 sm:h-80" : "h-52 sm:h-60"}`}>
               <Image
                 className="h-full w-full object-cover opacity-82"
-                src="/images/retablo-symbols.png"
+                src={isFeatureLayout ? room.image : "/images/retablo-symbols.png"}
                 alt="Mapa visual del retablo con puntos interactivos"
                 fill
                 sizes="520px"
@@ -678,24 +724,26 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="analysis-scroll max-h-[calc(74vh-15rem)] overflow-y-auto p-5 sm:p-6">
+            <div className={`analysis-scroll overflow-y-auto p-5 sm:p-6 ${isFeatureLayout ? "max-h-[calc(74vh-20rem)]" : "max-h-[calc(74vh-15rem)]"}`}>
               <p className="text-xs uppercase tracking-[0.28em] text-[#d8ad60]">Lectura de sala</p>
               <h2 className="mt-3 font-serif text-3xl leading-tight text-stone-50 sm:text-4xl">{room.focus}</h2>
 
-              <div className="route-card mt-5 border border-white/10 bg-white/[0.045] p-4">
-                <p className="text-[10px] uppercase tracking-[0.26em] text-stone-500">Trazabilidad del recorrido</p>
-                <p className="mt-2 text-sm leading-7 text-stone-300">{room.route}</p>
-              </div>
+              {layoutVariant !== 3 && (
+                <div className="route-card mt-5 border border-white/10 bg-white/[0.045] p-4">
+                  <p className="text-[10px] uppercase tracking-[0.26em] text-stone-500">Trazabilidad del recorrido</p>
+                  <p className="mt-2 text-sm leading-7 text-stone-300">{room.route}</p>
+                </div>
+              )}
 
-              <div className="mt-5 border-l-2 border-[#d8ad60] bg-[#d8ad60]/10 p-4">
+              <div className={`mt-5 bg-[#d8ad60]/10 p-4 ${layoutVariant === 1 ? "border-t-2 border-[#d8ad60]" : "border-l-2 border-[#d8ad60]"}`}>
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#f0d39a]">Idea fuerza</p>
                 <p className="mt-2 text-lg leading-7 text-stone-100">{room.idea}</p>
               </div>
 
-              <div className="mt-5 grid gap-3">
+              <div className={`mt-5 grid gap-3 ${layoutVariant === 2 ? "sm:grid-cols-3" : ""}`}>
                 {room.keys.map((key, index) => (
-                  <div key={key} className="key-card grid grid-cols-[42px_1fr] items-center border border-white/10 bg-white/[0.045]">
-                    <span className="grid h-full min-h-14 place-items-center border-r border-white/10 font-serif text-2xl text-[#d8ad60]">
+                  <div key={key} className={`key-card grid items-center border border-white/10 bg-white/[0.045] ${layoutVariant === 2 ? "grid-rows-[42px_1fr]" : "grid-cols-[42px_1fr]"}`}>
+                    <span className={`grid h-full min-h-14 place-items-center font-serif text-2xl text-[#d8ad60] ${layoutVariant === 2 ? "border-b border-white/10" : "border-r border-white/10"}`}>
                       {index + 1}
                     </span>
                     <span className="px-4 text-sm uppercase tracking-[0.14em] text-stone-200">{key}</span>
@@ -707,6 +755,51 @@ export default function Home() {
                 <p className="text-[10px] uppercase tracking-[0.26em] text-stone-500">Analisis</p>
                 <p className="mt-2 text-base leading-8 text-stone-300">{room.analysis}</p>
               </div>
+
+              <div className="journal-panel mt-6 border border-white/10 bg-black/24 p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.26em] text-[#d8ad60]">Diario de visita</p>
+                    <p className="mt-2 text-sm leading-6 text-stone-400">Marca lo importante y guarda una idea para esta sala.</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => updateJournal({ seen: !currentJournal.seen })}
+                      className={`grid h-10 w-10 place-items-center border transition ${
+                        currentJournal.seen ? "border-[#7fb6c8] bg-[#7fb6c8] text-black" : "border-white/14 text-stone-200 hover:border-[#7fb6c8]"
+                      }`}
+                      aria-label={currentJournal.seen ? "Quitar sala vista" : "Marcar sala vista"}
+                    >
+                      <Check size={17} />
+                    </button>
+                    <button
+                      onClick={() => updateJournal({ important: !currentJournal.important })}
+                      className={`grid h-10 w-10 place-items-center border transition ${
+                        currentJournal.important ? "border-[#d8ad60] bg-[#d8ad60] text-black" : "border-white/14 text-stone-200 hover:border-[#d8ad60]"
+                      }`}
+                      aria-label={currentJournal.important ? "Quitar sala importante" : "Marcar sala importante"}
+                    >
+                      <Bookmark size={17} />
+                    </button>
+                  </div>
+                </div>
+                <label className="mt-4 block">
+                  <span className="sr-only">Nota de la sala</span>
+                  <textarea
+                    value={currentJournal.note ?? ""}
+                    onChange={(event) => updateJournal({ note: event.target.value })}
+                    className="min-h-24 w-full resize-none border border-white/10 bg-white/[0.04] p-3 text-sm leading-6 text-stone-100 outline-none transition placeholder:text-stone-600 focus:border-[#d8ad60]/70"
+                    placeholder="Escribe una observacion breve..."
+                  />
+                </label>
+              </div>
+
+              {layoutVariant === 3 && (
+                <div className="route-card mt-6 border border-[#d8ad60]/30 bg-[#d8ad60]/8 p-4">
+                  <p className="text-[10px] uppercase tracking-[0.26em] text-[#d8ad60]">Transicion curatorial</p>
+                  <p className="mt-2 text-sm leading-7 text-stone-300">{room.route}</p>
+                </div>
+              )}
 
               {roomSpecial === "layers" && (
                 <div className="mt-6 border border-white/10 bg-black/22 p-4">
@@ -767,6 +860,10 @@ export default function Home() {
                 {room.label}
                 {current < tourRooms.length - 1 ? ` hacia ${tourRooms[current + 1].label}` : " completada"}
               </p>
+            </div>
+            <div className="hidden min-w-[190px] items-center gap-3 border-r border-white/10 px-4 text-xs uppercase tracking-[0.14em] text-stone-400 lg:flex">
+              <PenLine size={16} className="text-[#d8ad60]" />
+              {seenCount}/{tourRooms.length} vistas | {importantCount} claves
             </div>
             <div className="flex items-center justify-between gap-3 lg:justify-end">
               <button

@@ -88,6 +88,34 @@ button:disabled {
   text-wrap: balance;
 }
 
+.room-layout-1 .museum-card {
+  justify-self: end;
+}
+
+.room-layout-1 .analysis-panel {
+  box-shadow:
+    -28px 28px 90px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(216, 173, 96, 0.04);
+}
+
+.room-layout-2 .museum-card {
+  align-self: center;
+}
+
+.feature-analysis {
+  box-shadow:
+    0 26px 110px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(216, 173, 96, 0.08);
+}
+
+.room-layout-3 .museum-card {
+  max-width: 56rem;
+}
+
+.room-layout-3 .analysis-panel {
+  border-color: rgba(216, 173, 96, 0.24);
+}
+
 .hotspot {
   transition:
     transform 180ms ease,
@@ -128,6 +156,18 @@ button:disabled {
 
 .guide-callout {
   box-shadow: 0 0 80px rgba(216, 173, 96, 0.16);
+}
+
+.journal-panel {
+  background:
+    linear-gradient(135deg, rgba(216, 173, 96, 0.09), transparent 42%),
+    rgba(0, 0, 0, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(216, 173, 96, 0.03);
+}
+
+.journal-panel textarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(216, 173, 96, 0.62) rgba(255, 255, 255, 0.08);
 }
 
 .layer-preview,
@@ -269,6 +309,13 @@ button:disabled {
 @media (max-width: 760px) {
   .museum-card h1 {
     font-size: clamp(2.8rem, 15vw, 4.9rem);
+  }
+
+  .room-layout-1 .museum-card,
+  .room-layout-2 .museum-card,
+  .room-layout-3 .museum-card {
+    justify-self: stretch;
+    text-align: left;
   }
 
   .floorplan {
