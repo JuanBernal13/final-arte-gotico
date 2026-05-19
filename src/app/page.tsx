@@ -13,6 +13,7 @@ import {
   Crown,
   Cross,
   Eye,
+  ExternalLink,
   Home as HomeIcon,
   Info,
   Landmark,
@@ -449,13 +450,62 @@ const glossary = [
   "Devocion cartuja",
 ];
 
-const sources = [
-  "Cartuja de Miraflores. Retablo Mayor.",
-  "Junta de Castilla y Leon. Cartuja de Miraflores II: El retablo.",
-  "Museo Nacional del Prado. Siloe, Gil de.",
-  "Turismo de Castilla y Leon. Cartuja de Santa Maria de Miraflores.",
-  "Yarza Luaces, J. El retablo mayor de la Cartuja de Miraflores, 2001.",
-  "Fundacion Iberdrola. La Cartuja de Miraflores II: El retablo, 2007.",
+const bibliography = [
+  {
+    type: "Fuente institucional",
+    title: "Retablo Mayor",
+    author: "Cartuja de Miraflores",
+    year: "s. f.",
+    url: "https://www.cartuja.org/visita-virtual/retablo-mayor/",
+    contribution:
+      "Base principal para la ficha tecnica, cronologia 1496-1499, autoria de Gil de Siloe y Diego de la Cruz, coste documentado, programa iconografico, Eucaristia, rueda angelical, Crucifixion, pelicano y escenas de la Pasion.",
+    citation:
+      "Cartuja de Miraflores. (s. f.). Retablo Mayor. Visita virtual de la Cartuja de Miraflores.",
+  },
+  {
+    type: "Museo / enciclopedia",
+    title: "Siloe, Gil de",
+    author: "Museo Nacional del Prado",
+    year: "s. f.",
+    url: "https://www.museodelprado.es/aprende/enciclopedia/voz/siloe-gil-de/fa1e7ddb-348a-4871-8f36-18363eb8e102",
+    contribution:
+      "Sirve para contextualizar a Gil de Siloe, su lenguaje escultorico y la idea de obra total, donde arquitectura, escultura y pintura trabajan al servicio del mensaje religioso.",
+    citation:
+      "Museo Nacional del Prado. (s. f.). Siloe, Gil de. Enciclopedia del Museo Nacional del Prado.",
+  },
+  {
+    type: "Estudio academico",
+    title: "El retablo mayor de la Cartuja de Miraflores",
+    author: "Joaquin Yarza Luaces",
+    year: "2001",
+    url: "https://www.cartuja.org/wp-content/uploads/2017/07/cartuja_retablo.pdf",
+    contribution:
+      "Referencia academica para profundizar en el encargo, el programa visual, la originalidad compositiva del retablo y su lectura dentro del tardogotico castellano.",
+    citation:
+      "Yarza Luaces, J. (2001). El retablo mayor de la Cartuja de Miraflores.",
+  },
+  {
+    type: "Restauracion",
+    title: "La Cartuja de Miraflores II: El retablo",
+    author: "Fundacion Iberdrola Espana",
+    year: "2007",
+    url: "https://www.fundacioniberdrolaespana.org/wp-content/uploads/cartuja-miraflores-retablo-cuadernos-restauracion-recuperacion-publicaciones-fundacion-iberdrola-espana.pdf",
+    contribution:
+      "Aporta una lectura material y de conservacion: tecnica, policromia, dorado, restauracion y recuperacion visual del conjunto.",
+    citation:
+      "Fundacion Iberdrola Espana. (2007). La Cartuja de Miraflores II: El retablo.",
+  },
+  {
+    type: "Patrimonio / turismo cultural",
+    title: "Cartuja de Santa Maria de Miraflores",
+    author: "Turismo de Castilla y Leon",
+    year: "s. f.",
+    url: "https://www.turismocastillayleon.com/",
+    contribution:
+      "Apoya la contextualizacion patrimonial del monasterio, su ubicacion en Burgos y su importancia como espacio religioso y funerario vinculado a la monarquia castellana.",
+    citation:
+      "Turismo de Castilla y Leon. (s. f.). Cartuja de Santa Maria de Miraflores.",
+  },
 ];
 
 const teamMembers = [
@@ -480,6 +530,7 @@ export default function Home() {
   const [mapOpen, setMapOpen] = useState(false);
   const [guided, setGuided] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [bibliographyOpen, setBibliographyOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(0);
   const [journal, setJournal] = useState<Journal>(() => {
     if (typeof window === "undefined") {
@@ -668,6 +719,13 @@ export default function Home() {
             >
               <Info size={16} />
               Ficha
+            </button>
+            <button
+              onClick={() => setBibliographyOpen(true)}
+              className="inline-flex min-h-11 items-center gap-2 border border-white/14 bg-black/36 px-4 text-xs uppercase tracking-[0.18em] text-stone-100 backdrop-blur-md transition hover:border-[#d8ad60]/60"
+            >
+              <BookOpen size={16} />
+              Bibliografia
             </button>
             <button
               onClick={() => setMapOpen(true)}
@@ -940,6 +998,62 @@ export default function Home() {
         </div>
       )}
 
+      {bibliographyOpen && (
+        <div className="fixed inset-0 z-40 grid place-items-center bg-black/68 p-5 backdrop-blur-sm">
+          <article className="modal-panel bibliography-modal w-full max-w-5xl border border-[#d8ad60]/35 bg-[#100d0a] p-6 text-stone-100 shadow-2xl">
+            <div className="flex items-start justify-between gap-4 border-b border-white/12 pb-5">
+              <div>
+                <p className="text-xs uppercase tracking-[0.28em] text-[#d8ad60]">Bibliografia comentada</p>
+                <h2 className="mt-3 font-serif text-4xl">Fuentes de investigacion</h2>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-stone-400">
+                  Estas referencias sostienen la informacion historica, iconografica, tecnica y de conservacion usada en los dos recorridos.
+                </p>
+              </div>
+              <button onClick={() => setBibliographyOpen(false)} className="grid h-9 w-9 place-items-center border border-white/14">
+                <X size={16} />
+              </button>
+            </div>
+
+            <div className="bibliography-list mt-5 grid max-h-[68vh] gap-4 overflow-y-auto pr-2">
+              {bibliography.map((source, index) => (
+                <article key={source.url} className="border border-white/10 bg-white/[0.04] p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.24em] text-[#d8ad60]">
+                        {index + 1}. {source.type}
+                      </p>
+                      <h3 className="mt-2 font-serif text-3xl leading-tight text-stone-50">{source.title}</h3>
+                      <p className="mt-1 text-sm text-stone-400">
+                        {source.author} | {source.year}
+                      </p>
+                    </div>
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-10 items-center gap-2 border border-[#d8ad60]/45 px-3 text-xs uppercase tracking-[0.16em] text-[#eac577] transition hover:bg-[#d8ad60] hover:text-black"
+                    >
+                      Abrir
+                      <ExternalLink size={14} />
+                    </a>
+                  </div>
+                  <div className="mt-4 grid gap-3 lg:grid-cols-[0.88fr_1.12fr]">
+                    <div className="border border-white/10 bg-black/18 p-3">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Uso en el trabajo</p>
+                      <p className="mt-2 text-sm leading-7 text-stone-300">{source.contribution}</p>
+                    </div>
+                    <div className="border border-white/10 bg-black/18 p-3">
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-stone-500">Referencia sugerida</p>
+                      <p className="mt-2 text-sm leading-7 text-stone-300">{source.citation}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </article>
+        </div>
+      )}
+
       {mapOpen && (
         <div className="fixed inset-0 z-50 bg-[#070605]/92 p-5 backdrop-blur-md">
           <div className="mx-auto flex h-full max-w-6xl flex-col border border-white/12 bg-black/24 p-5">
@@ -992,7 +1106,7 @@ export default function Home() {
               })}
             </div>
             <div className="border-t border-white/12 pt-4 text-xs leading-6 text-stone-500">
-              Fuentes: {sources.join(" | ")}
+              Fuentes: {bibliography.map((source) => source.author).join(" | ")}
             </div>
           </div>
         </div>
