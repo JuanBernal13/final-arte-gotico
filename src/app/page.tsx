@@ -232,6 +232,111 @@ const rooms = [
   },
 ];
 
+const gothicRooms = [
+  {
+    id: "vision-gotica",
+    icon: Sparkles,
+    label: "Vision",
+    title: "El gotico como experiencia espiritual",
+    subtitle: "Altura, luz, detalle y contemplacion frente al retablo",
+    body:
+      "Esta opcion lee la obra desde las caracteristicas del arte gotico: una imagen que no solo representa la fe, sino que organiza una experiencia visual intensa, ascendente y devocional.",
+    idea: "El gotico busca elevar la mirada y convertir la belleza en camino espiritual.",
+    keys: ["Verticalidad simbolica", "Luz mistica", "Narracion sagrada"],
+    analysis:
+      "Aunque el retablo no sea una catedral, funciona con una logica gotica: dirige la mirada hacia lo alto, multiplica detalles, usa el oro como luz y transforma la contemplacion en lectura religiosa.",
+    focus: "La obra muestra que el gotico es una forma de mirar, no solo un estilo arquitectonico.",
+    route: "Punto inicial del recorrido alternativo. Primero entendemos que significa ver la obra como arte gotico.",
+    tag: "Arte gotico",
+    image: "/images/gothic-surreal-tour.png",
+  },
+  {
+    id: "luz-dorada",
+    icon: Eye,
+    label: "Luz",
+    title: "Luz dorada y presencia divina",
+    subtitle: "El oro como resplandor sagrado",
+    body:
+      "En el arte gotico, la luz sugiere presencia divina. En el retablo, el dorado y la policromia producen un brillo que separa el espacio sagrado del mundo cotidiano.",
+    idea: "La luz no decora: hace visible lo invisible.",
+    keys: ["Dorado", "Policromia", "Atmosfera sagrada"],
+    analysis:
+      "El color y el oro activan una sensacion de misterio. La obra no quiere parecer naturalista solamente; quiere brillar como una vision religiosa, cercana a un manuscrito iluminado o a un altar encendido.",
+    focus: "El dorado convierte la materia en signo de trascendencia.",
+    route: "Luego de la vision general, observamos como la luz construye el ambiente espiritual de la obra.",
+    tag: "Luz gotica",
+    image: "/images/gothic-surreal-tour.png",
+  },
+  {
+    id: "detalle",
+    icon: Layers3,
+    label: "Detalle",
+    title: "Abundancia ornamental",
+    subtitle: "Botanica, arquitectura y miniatura visual",
+    body:
+      "El gotico ama la densidad del detalle: tracerias, pliegues, hojas, santos, angeles y arquitecturas imaginadas. El retablo convierte esa abundancia en una lectura por capas.",
+    idea: "El detalle gotico invita a detenerse, acercarse y descubrir.",
+    keys: ["Traceria", "Motivos vegetales", "Lectura por capas"],
+    analysis:
+      "La acumulacion no es desorden. Cada fragmento ayuda a sostener el conjunto: la ornamentacion hace que la obra parezca un manuscrito expandido, una pagina sagrada convertida en espacio.",
+    focus: "La riqueza ornamental enseña al espectador a mirar lentamente.",
+    route: "Despues de la luz, entramos al detalle: alli el gotico revela su paciencia visual.",
+    tag: "Ornamento",
+    image: "/images/gothic-surreal-tour.png",
+  },
+  {
+    id: "narracion",
+    icon: BookOpen,
+    label: "Relato",
+    title: "Narracion religiosa",
+    subtitle: "Imagenes que cuentan la fe",
+    body:
+      "Una caracteristica gotica es narrar visualmente la historia sagrada. En el retablo, las escenas de la Pasion rodean el centro y orientan la emocion hacia la Redencion.",
+    idea: "La imagen funciona como libro visual para la memoria y la devocion.",
+    keys: ["Pasion", "Redencion", "Didactica visual"],
+    analysis:
+      "El espectador no recibe solo una escena, sino un recorrido. La obra organiza episodios, simbolos y figuras como una pagina de catalogo devocional donde cada imagen conduce a otra.",
+    focus: "El gotico convierte la fe en relato visible.",
+    route: "Del detalle pasamos a la narracion: las partes ornamentales tambien cuentan una historia.",
+    tag: "Libro visual",
+    image: "/images/retablo-symbols.png",
+  },
+  {
+    id: "figuras",
+    icon: Crown,
+    label: "Figuras",
+    title: "Santos, reyes y jerarquias",
+    subtitle: "La imagen ordena lo humano y lo celestial",
+    body:
+      "El arte gotico suele presentar jerarquias: Cristo, santos, angeles, donantes y reyes. En la obra, lo politico y lo espiritual se integran dentro del mismo orden visual.",
+    idea: "La jerarquia visual revela como se entiende el mundo sagrado.",
+    keys: ["Cristo al centro", "Angeles", "Memoria regia"],
+    analysis:
+      "La presencia de reyes orantes no rompe el discurso religioso: lo inserta. El gotico permite que la devocion, el linaje y la autoridad aparezcan bajo una misma estructura simbolica.",
+    focus: "La obra muestra un universo ordenado por la fe.",
+    route: "Tras leer el relato, observamos quien ocupa cada lugar dentro de la imagen.",
+    tag: "Jerarquia",
+    image: "/images/retablo-hero.png",
+  },
+  {
+    id: "emocion",
+    icon: Church,
+    label: "Devocion",
+    title: "Belleza para conmover",
+    subtitle: "Contemplacion, misterio y afecto religioso",
+    body:
+      "El gotico busca conmover. La expresividad, el brillo y la complejidad acercan al espectador a una experiencia emocional de la fe, no solo a una explicacion intelectual.",
+    idea: "La belleza gotica mueve la mirada y tambien el afecto.",
+    keys: ["Asombro", "Dolor devoto", "Meditacion"],
+    analysis:
+      "La obra produce una atmosfera eterea y misteriosa: como en una vision sagrada, el espectador queda entre historia, simbolo y presencia espiritual.",
+    focus: "El gotico no solo informa: hace sentir.",
+    route: "El recorrido culmina en la funcion emocional de la obra: enseñar, conmover y elevar.",
+    tag: "Contemplacion",
+    image: "/images/gothic-surreal-tour.png",
+  },
+];
+
 const hotspots = [
   {
     x: "50%",
@@ -276,6 +381,15 @@ const guideLines = [
   "Piensa en el espectador. El retablo enseña, conmueve y acompaña la meditacion.",
   "Activa las capas. Ahora puedes comparar la primera mirada con la lectura historica completa.",
   "Cierra el recorrido. Arte, fe y poder regio se unen en una sola imagen monumental.",
+];
+
+const gothicGuideLines = [
+  "Comienza por la experiencia gotica: altura visual, misterio, brillo y contemplacion.",
+  "Observa la luz. En el gotico, el resplandor dorado sugiere presencia divina.",
+  "Acercate al detalle. La ornamentacion funciona como una miniatura iluminada expandida.",
+  "Sigue el relato. El gotico convierte la historia sagrada en una lectura visual.",
+  "Ubica las jerarquias. Santos, angeles, reyes y simbolos ordenan el mundo de la obra.",
+  "Cierra con la emocion. El arte gotico busca ensenar, conmover y elevar la mirada.",
 ];
 
 const interpretationLayers = [
@@ -349,6 +463,7 @@ const teamMembers = [
 
 export default function Home() {
   const [started, setStarted] = useState(false);
+  const [activeTour, setActiveTour] = useState<"main" | "gothic">("main");
   const [current, setCurrent] = useState(0);
   const [activeHotspot, setActiveHotspot] = useState<number | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
@@ -356,8 +471,11 @@ export default function Home() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
-  const room = rooms[current];
-  const progress = ((current + 1) / rooms.length) * 100;
+  const tourRooms = activeTour === "gothic" ? gothicRooms : rooms;
+  const activeGuideLines = activeTour === "gothic" ? gothicGuideLines : guideLines;
+  const room = tourRooms[current];
+  const roomSpecial = "special" in room ? room.special : undefined;
+  const progress = ((current + 1) / tourRooms.length) * 100;
 
   const particles = useMemo(
     () =>
@@ -371,6 +489,10 @@ export default function Home() {
   );
 
   useEffect(() => {
+    if (!started || !stageRef.current) {
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
@@ -381,12 +503,19 @@ export default function Home() {
     }, stageRef);
 
     return () => ctx.revert();
-  }, [current]);
+  }, [current, started]);
 
   const goTo = (index: number) => {
-    setCurrent(Math.max(0, Math.min(index, rooms.length - 1)));
+    setCurrent(Math.max(0, Math.min(index, tourRooms.length - 1)));
     setActiveHotspot(null);
     setMapOpen(false);
+  };
+
+  const startTour = (tour: "main" | "gothic") => {
+    setActiveTour(tour);
+    setCurrent(0);
+    setStarted(true);
+    setGuided(true);
   };
 
   const Icon = room.icon;
@@ -419,16 +548,22 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <button
-            onClick={() => {
-              setStarted(true);
-              setGuided(true);
-            }}
-            className="mt-10 inline-flex min-h-14 items-center gap-3 border border-[#d8ad60] bg-[#d8ad60] px-7 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#efca79]"
-          >
-            <Play size={18} />
-            Iniciar Tour
-          </button>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <button
+              onClick={() => startTour("gothic")}
+              className="inline-flex min-h-14 items-center gap-3 border border-[#d8ad60] bg-[#d8ad60] px-7 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#efca79]"
+            >
+              <Sparkles size={18} />
+              Tour arte gotico
+            </button>
+            <button
+              onClick={() => startTour("main")}
+              className="inline-flex min-h-14 items-center gap-3 border border-white/20 bg-black/42 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-stone-50 backdrop-blur-md transition hover:border-[#d8ad60]"
+            >
+              <Play size={18} />
+              Tour de la obra
+            </button>
+          </div>
         </section>
       </main>
     );
@@ -503,7 +638,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-3 border border-[#d8ad60]/35 bg-black/34 px-4 py-3 backdrop-blur-md">
               <Icon size={18} className="text-[#eac577]" />
               <span className="text-xs uppercase tracking-[0.26em] text-[#eac577]">
-                Sala {current + 1} de {rooms.length}
+                Sala {current + 1} de {tourRooms.length}
               </span>
             </div>
             <h1 className="mt-5 font-serif text-[clamp(3rem,8vw,8rem)] leading-[0.86] text-stone-50">{room.title}</h1>
@@ -512,7 +647,7 @@ export default function Home() {
             {guided && (
               <div className="guide-callout mt-6 max-w-3xl border border-[#d8ad60]/45 bg-black/48 p-4 backdrop-blur-md">
                 <p className="text-[10px] uppercase tracking-[0.28em] text-[#d8ad60]">Guia de sala</p>
-                <p className="mt-2 font-serif text-2xl leading-8 text-stone-50">{guideLines[current]}</p>
+                <p className="mt-2 font-serif text-2xl leading-8 text-stone-50">{activeGuideLines[current]}</p>
               </div>
             )}
             <div className="mt-7 inline-flex border border-white/16 bg-white/[0.06] px-4 py-3 text-xs uppercase tracking-[0.22em] text-stone-200">
@@ -573,7 +708,7 @@ export default function Home() {
                 <p className="mt-2 text-base leading-8 text-stone-300">{room.analysis}</p>
               </div>
 
-              {room.special === "layers" && (
+              {roomSpecial === "layers" && (
                 <div className="mt-6 border border-white/10 bg-black/22 p-4">
                   <p className="text-[10px] uppercase tracking-[0.26em] text-stone-500">Comparacion visual</p>
                   <div className="mt-4 grid grid-cols-2 gap-2">
@@ -596,7 +731,7 @@ export default function Home() {
                 </div>
               )}
 
-              {room.special === "timeline" && (
+              {roomSpecial === "timeline" && (
                 <div className="mt-6 grid gap-3">
                   {timeline.map(([year, event]) => (
                     <div key={year} className="timeline-item grid grid-cols-[72px_1fr] border border-white/10 bg-white/[0.04]">
@@ -630,7 +765,7 @@ export default function Home() {
               <p className="text-[10px] uppercase tracking-[0.24em] text-stone-500">Ruta</p>
               <p className="mt-1 text-sm text-stone-200">
                 {room.label}
-                {current < rooms.length - 1 ? ` hacia ${rooms[current + 1].label}` : " completada"}
+                {current < tourRooms.length - 1 ? ` hacia ${tourRooms[current + 1].label}` : " completada"}
               </p>
             </div>
             <div className="flex items-center justify-between gap-3 lg:justify-end">
@@ -643,7 +778,7 @@ export default function Home() {
                 Anterior
               </button>
               <div className="hidden gap-2 xl:flex">
-                {rooms.map((item, index) => (
+                {tourRooms.map((item, index) => (
                   <button
                     key={item.id}
                     onClick={() => goTo(index)}
@@ -656,7 +791,7 @@ export default function Home() {
               </div>
               <button
                 onClick={() => goTo(current + 1)}
-                disabled={current === rooms.length - 1}
+                disabled={current === tourRooms.length - 1}
                 className="inline-flex min-h-11 items-center gap-2 border border-[#d8ad60]/70 bg-[#d8ad60] px-4 text-sm font-semibold uppercase tracking-[0.16em] text-black transition hover:bg-[#efca79] disabled:cursor-not-allowed disabled:opacity-35"
               >
                 Siguiente
@@ -725,7 +860,7 @@ export default function Home() {
               <div className="floor-label bottom-label">Entrada del visitante</div>
               <div className="floor-spine" />
               <div className="floor-cross" />
-              {rooms.map((item, index) => {
+              {tourRooms.map((item, index) => {
                 const ItemIcon = item.icon;
                 const positions = [
                   ["50%", "84%"],
