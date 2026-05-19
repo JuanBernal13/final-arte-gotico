@@ -605,6 +605,15 @@ export default function Home() {
     setGuided(true);
   };
 
+  const returnHome = () => {
+    setStarted(false);
+    setCurrent(0);
+    setActiveHotspot(null);
+    setMapOpen(false);
+    setSheetOpen(false);
+    setBibliographyOpen(false);
+  };
+
   const updateJournal = (updates: JournalEntry) => {
     setJournal((entries) => ({
       ...entries,
@@ -691,7 +700,7 @@ export default function Home() {
 
         <header className="relative z-20 flex items-center justify-between px-5 py-4 sm:px-8">
           <button
-            onClick={() => goTo(0)}
+            onClick={returnHome}
             className="flex items-center gap-3 border border-[#d8ad60]/30 bg-black/36 px-4 py-3 text-left backdrop-blur-md"
           >
             <Church size={18} className="text-[#eac577]" />
@@ -702,6 +711,13 @@ export default function Home() {
           </button>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={returnHome}
+              className="inline-flex min-h-11 items-center gap-2 border border-white/14 bg-black/36 px-4 text-xs uppercase tracking-[0.18em] text-stone-100 backdrop-blur-md transition hover:border-[#d8ad60]/60"
+            >
+              <HomeIcon size={16} />
+              Inicio
+            </button>
             <button
               onClick={() => setGuided((value) => !value)}
               className={`inline-flex min-h-11 items-center gap-2 border px-4 text-xs uppercase tracking-[0.18em] backdrop-blur-md transition ${
